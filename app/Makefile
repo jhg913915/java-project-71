@@ -5,5 +5,5 @@ run-dist-version:
 run-dist-help:
 	./build/install/app/bin/app -h
 run-dist-files:
-    .\app\build\install\app\bin\app .\app\file1.json .\app\file2.json
+	./build/install/app/bin/app ./file1.json ./file2.json
 
