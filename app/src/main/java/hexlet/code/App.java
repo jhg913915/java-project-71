@@ -2,17 +2,15 @@ package hexlet.code;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
-
-import static hexlet.code.Differ.parseFile;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "1.0",
         description = "Compares two configuration files and shows a difference.")
-public class App implements Callable<Integer> {
+public class App implements Runnable {
+
     @Parameters(index = "0", description = "path to first file")
     private String filepath1;
 
@@ -22,27 +20,31 @@ public class App implements Callable<Integer> {
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
     private String format;
 
+    private int exitCode = 0;
+
     @Override
-    public Integer call() throws Exception {
+    public void run() {
         try {
             System.out.println("First file parsed contents:");
-            Map<String, Object> file1Data = parseFile(filepath1);
+            Map<String, Object> file1Data = Differ.parseFile(filepath1);
             System.out.println(file1Data);
-
             System.out.println("\nSecond file parsed contents:");
-            Map<String, Object> file2Data = parseFile(filepath2);
+            Map<String, Object> file2Data = Differ.parseFile(filepath2);
             System.out.println(file2Data);
-
-            return 0;
-
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            return 1;
+            exitCode = 1;
         }
     }
 
+    public int getExitCode() {
+        return exitCode;
+    }
+
     public static void main(String[] args) {
-        int exitCode = new CommandLine(new App()).execute(args);
-        System.exit(exitCode);
+        App app = new App();
+        new CommandLine(app).execute(args);
+        System.exit(app.getExitCode());
     }
 }
+
