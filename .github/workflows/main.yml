@@ -20,8 +20,7 @@ jobs:
       - run: ./gradlew checkstyleMain
       - run: ./gradlew test
       - name: Test with Gradle
-        run: ./gradlew test
-
+      	run: ./gradlew test
       # - name: Publish code coverage
       #   uses: paambaati/codeclimate-action@v9.0.0
       #   env:
