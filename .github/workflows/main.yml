@@ -19,6 +19,10 @@ jobs:
           gradle-version: 8.7
       - run: ./gradlew checkstyleMain
       - run: ./gradlew test
+      - name: Code Climate Test Reporter
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       # - name: Publish code coverage
       #   uses: paambaati/codeclimate-action@v9.0.0
       #   env:
