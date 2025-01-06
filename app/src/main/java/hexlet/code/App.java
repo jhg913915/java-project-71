@@ -25,12 +25,8 @@ public class App implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("First file parsed contents:");
-            Map<String, Object> file1Data = Differ.parseFile(filepath1);
-            System.out.println(file1Data);
-            System.out.println("\nSecond file parsed contents:");
-            Map<String, Object> file2Data = Differ.parseFile(filepath2);
-            System.out.println(file2Data);
+            String resultData = Differ.generate(filepath1, filepath2);
+            System.out.println(resultData);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             exitCode = 1;
