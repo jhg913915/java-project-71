@@ -22,5 +22,6 @@ run-dist-version:
 run-dist-help:
 	./build/install/app/bin/app -h
 run-dist-files:
+	./gradlew installDist
 	./build/install/app/bin/app ./file1.json ./file2.json
 
