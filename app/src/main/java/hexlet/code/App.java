@@ -5,6 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "1.0",
         description = "Compares two configuration files and shows a difference.")
 public class App implements Runnable {
@@ -17,7 +18,6 @@ public class App implements Runnable {
 
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
     private String format;
-
     private int exitCode = 0;
 
     @Override
@@ -41,4 +41,3 @@ public class App implements Runnable {
         System.exit(app.getExitCode());
     }
 }
-

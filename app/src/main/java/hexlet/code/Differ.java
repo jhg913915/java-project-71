@@ -1,33 +1,14 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 public class Differ {
-    public static Map<String, Object> parseFile(String filePath) throws Exception {
-        Path path = Paths.get(filePath).toAbsolutePath();
-        String content = readFile(path);
-        return parse(content);
-    }
-
-    private static String readFile(Path path) throws IOException {
-        return new String(Files.readAllBytes(path));
-    }
-
-    private static Map<String, Object> parse(String content) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(content, Map.class);
-    }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
-        Map<String, Object> file1Data = parseFile(filePath1);
-        Map<String, Object> file2Data = parseFile(filePath2);
+        Map<String, Object> file1Data = Parser.parseFile(filePath1);
+        Map<String, Object> file2Data = Parser.parseFile(filePath2);
         return buildDiff(file1Data, file2Data);
     }
 

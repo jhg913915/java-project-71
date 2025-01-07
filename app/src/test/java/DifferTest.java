@@ -1,7 +1,7 @@
 import hexlet.code.Differ;
 import org.junit.jupiter.api.Test;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
+
+import static hexlet.code.Utils.TestUtils.getFixturePath;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -35,10 +35,31 @@ class DifferTest {
 
         assertEquals(expected, actual);
     }
+
     @Test
     void testGenerateWithDifferentFiles() throws Exception {
         String file1Path = getFixturePath("diff1.json");
         String file2Path = getFixturePath("diff2.json");
+
+        String expected = """
+                {
+                    follow: false
+                    host: hexlet.io
+                  - proxy: 123.234.53.22
+                  - timeout: 50
+                  + timeout: 20
+                  + verbose: true
+                }
+                """;
+        String actual = Differ.generate(file1Path, file2Path);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testGenerateWithDifferentFilesYaml() throws Exception {
+        String file1Path = getFixturePath("diff1.yaml");
+        String file2Path = getFixturePath("diff2.yaml");
 
         String expected = """
                 {
@@ -106,9 +127,5 @@ class DifferTest {
     @Test
     void testGenerateWithIncorrectFile() {
         assertThrows(Exception.class, () -> Differ.generate("incorrect", "incorrect"));
-    }
-
-    private String getFixturePath(String fileName) throws URISyntaxException {
-        return Paths.get(getClass().getClassLoader().getResource(fileName).toURI()).toAbsolutePath().toString();
     }
 }

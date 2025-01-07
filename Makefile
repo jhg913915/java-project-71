@@ -25,7 +25,10 @@ lint:
 checkstyle:
 	make -C app checkstyle
 
-run-dist-files:
-	make -C app run-dist-files
+run-dist-json-files:
+	make -C app run-dist-json-files
+
+run-dist-yaml-files:
+	make -C app run-dist-yaml-files
 
 .PHONY: build
