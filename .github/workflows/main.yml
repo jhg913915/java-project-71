@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           java-version: '21'
+          
           distribution: 'temurin'
       - uses: gradle/gradle-build-action@v3
         with:
@@ -28,7 +29,7 @@ jobs:
           JACOCO_SOURCE_PATH: app/src/main/java
         with:
           beforeBuildCommand: chmod +x app/gradlew && app/gradlew
-          coverageCommand: .app/gradlew test jacocoTestReport 
+          coverageCommand: app/gradlew test jacocoTestReport 
           coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
 
 
