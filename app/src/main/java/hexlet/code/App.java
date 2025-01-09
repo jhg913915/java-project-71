@@ -17,13 +17,14 @@ public class App implements Runnable {
     private String filepath2;
 
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
-    private String format;
+    private String format = "stylish";
+
     private int exitCode = 0;
 
     @Override
     public void run() {
         try {
-            String resultData = Differ.generate(filepath1, filepath2);
+            String resultData = Differ.generate(filepath1, filepath2, format);
             System.out.println(resultData);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
