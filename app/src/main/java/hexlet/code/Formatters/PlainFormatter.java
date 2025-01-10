@@ -12,7 +12,6 @@ public class PlainFormatter implements Formatter {
         for (Map<String, Object> diffItem : diff) {
             String key = (String) diffItem.get("key");
             String type = (String) diffItem.get("type");
-            Object value;
             Object newValue;
             Object oldValue;
             switch (type) {
