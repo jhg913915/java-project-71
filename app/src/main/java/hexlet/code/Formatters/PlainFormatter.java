@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class PlainFormatter implements Formatter {
+public final class PlainFormatter implements Formatter {
     @Override
     public String format(List<Map<String, Object>> diff) {
         StringBuilder sb = new StringBuilder();
