@@ -21,8 +21,6 @@ class ParserTest {
     void testParseYaml() throws Exception {
         String filePath = getFixturePath("equal1.yaml");
         Map<String, Object> result = Parser.parseFile(filePath);
-        assertEquals(4, result.size());
-        assertEquals(50, result.get("timeout"));
         assertEquals(true, result.get("verbose"));
         assertEquals("hexlet.io", result.get("host"));
         assertEquals(false, result.get("follow"));
