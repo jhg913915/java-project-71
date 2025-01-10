@@ -39,10 +39,8 @@ public class Differ {
         for (String key : allKeys) {
             Object value1 = file1Data.get(key);
             Object value2 = file2Data.get(key);
-
             Map<String, Object> diffItem = new LinkedHashMap<>();
             diffItem.put("key", key);
-
             if (file1Data.containsKey(key) && !file2Data.containsKey(key)) {
                 diffItem.put("type", "removed");
                 diffItem.put("value", value1);
@@ -53,12 +51,7 @@ public class Differ {
                 diffItem.put("type", "changed");
                 diffItem.put("oldValue", value1);
                 diffItem.put("newValue", value2);
-
-            } else if (value1 == null && value2 != null) {
-                diffItem.put("type", "changed");
-                diffItem.put("oldValue", value1);
-                diffItem.put("newValue", value2);
-            } else if (value1 != null && value2 == null) {
+            } else if ((value1 == null && value2 != null) || (value1 != null && value2 == null)) {
                 diffItem.put("type", "changed");
                 diffItem.put("oldValue", value1);
                 diffItem.put("newValue", value2);

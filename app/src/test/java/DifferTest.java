@@ -12,10 +12,8 @@ class DifferTest {
     void testGenerateWithEmptyFiles() throws Exception {
         String file1Path = getFixturePath("empty1.json");
         String file2Path = getFixturePath("empty2.json");
-
         String expected = "{\n}\n";
         String actual = Differ.generate(file1Path, file2Path);
-
         assertEquals(expected, actual);
     }
 
@@ -23,7 +21,6 @@ class DifferTest {
     void testGenerateWithEqualFiles() throws Exception {
         String file1Path = getFixturePath("equal1.json");
         String file2Path = getFixturePath("equal2.json");
-
         String expected = """
                 {
                     follow: false
@@ -33,7 +30,6 @@ class DifferTest {
                 }
                 """;
         String actual = Differ.generate(file1Path, file2Path);
-
         assertEquals(expected, actual);
     }
 
@@ -41,7 +37,6 @@ class DifferTest {
     void testGenerateWithDifferentFiles() throws Exception {
         String file1Path = getFixturePath("diff1.json");
         String file2Path = getFixturePath("diff2.json");
-
         String expected = """
                 {
                     follow: false
@@ -53,7 +48,6 @@ class DifferTest {
                 }
                 """;
         String actual = Differ.generate(file1Path, file2Path);
-
         assertEquals(expected, actual);
     }
 
@@ -61,7 +55,6 @@ class DifferTest {
     void testGenerateWithDifferentFilesYaml() throws Exception {
         String file1Path = getFixturePath("diff1.yaml");
         String file2Path = getFixturePath("diff2.yaml");
-
         String expected = """
                 {
                     follow: false
@@ -73,7 +66,6 @@ class DifferTest {
                 }
                 """;
         String actual = Differ.generate(file1Path, file2Path);
-
         assertEquals(expected, actual);
     }
 
@@ -90,7 +82,6 @@ class DifferTest {
                 """;
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
-
         String expected1 = """
                 {
                   - timeout: 20
@@ -114,7 +105,6 @@ class DifferTest {
 
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
-
         String expected1 = """
                  {
                      timeout: 20

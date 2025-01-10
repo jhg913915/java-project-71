@@ -1,7 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/jhg913915/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/jhg913915/java-project-71/actions)
 
-[![asciicast](https://asciinema.org/a/W1R8XqVVy6YUKWzDlP8npDQbT.svg)](https://asciinema.org/a/W1R8XqVVy6YUKWzDlP8npDQbT)
+[![asciicast](https://asciinema.org/a/nuVl2Od92MCofmCgr4aOY2PpF.svg)](https://asciinema.org/a/nuVl2Od92MCofmCgr4aOY2PpF)
 
 [![Java CI](https://github.com/jhg913915/java-project-71/actions/workflows/main.yml/badge.svg)](https://github.com/jhg913915/java-project-71/actions/workflows/main.yml)
 
