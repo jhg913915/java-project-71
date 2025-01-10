@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import hexlet.code.Formatters.Formatter;
+import hexlet.code.Formatters.PlainFormatter;
 import hexlet.code.Formatters.StylishFormatter;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class Differ {
     private static String format(List<Map<String, Object>> diff, String formatName) {
         Formatter formatter = switch (formatName) {
             case "stylish" -> new StylishFormatter();
+            case "plain" -> new PlainFormatter();
             default -> new StylishFormatter();
         };
         return formatter.format(diff);
