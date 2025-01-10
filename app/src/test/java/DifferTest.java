@@ -12,7 +12,7 @@ class DifferTest {
     void testGenerateWithEmptyFiles() throws Exception {
         String file1Path = getFixturePath("empty1.json");
         String file2Path = getFixturePath("empty2.json");
-        String expected = "{\n}\n";
+        String expected = "{\n}";
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
     }
@@ -27,8 +27,7 @@ class DifferTest {
                     host: hexlet.io
                     timeout: 50
                     verbose: true
-                }
-                """;
+                }""";
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
     }
@@ -45,8 +44,7 @@ class DifferTest {
                   - timeout: 50
                   + timeout: 20
                   + verbose: true
-                }
-                """;
+                }""";
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
     }
@@ -63,8 +61,7 @@ class DifferTest {
                   - timeout: 50
                   + timeout: 20
                   + verbose: true
-                }
-                """;
+                }""";
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
     }
@@ -78,16 +75,14 @@ class DifferTest {
                 {
                   + timeout: 20
                   + verbose: true
-                }
-                """;
+                }""";
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
         String expected1 = """
                 {
                   - timeout: 20
                   - verbose: true
-                }
-                """;
+                }""";
         String actual1 = Differ.generate(file2Path, file1Path);
         assertEquals(expected1, actual1);
 
@@ -100,8 +95,7 @@ class DifferTest {
                 {
                     timeout: 20
                   + verbose: true
-                }
-                """;
+                }""";
 
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
@@ -109,8 +103,7 @@ class DifferTest {
                  {
                      timeout: 20
                    - verbose: true
-                 }
-                 """;
+                 }""";
         String actual1 = Differ.generate(file2Path, file1Path);
         assertEquals(expected1, actual1);
 
@@ -145,8 +138,7 @@ class DifferTest {
                   + setting2: 300
                   - setting3: true
                   + setting3: none
-                }
-                """;
+                }""";
         String actual = Differ.generate(file1Path, file2Path);
         assertEquals(expected, actual);
         String file3Path = TestUtils.getFixturePath("nested1.yaml");

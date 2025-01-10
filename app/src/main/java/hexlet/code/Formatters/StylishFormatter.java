@@ -41,7 +41,7 @@ public class StylishFormatter implements Formatter {
                     break;
             }
         }
-        sb.append("}\n");
+        sb.append("}");
         return sb.toString();
     }
 }
