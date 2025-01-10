@@ -43,28 +43,40 @@ public class Differ {
         for (String key : allKeys) {
             Object value1 = file1Data.get(key);
             Object value2 = file2Data.get(key);
-            Map<String, Object> diffItem = new LinkedHashMap<>();
-            diffItem.put("key", key);
-            if (file1Data.containsKey(key) && !file2Data.containsKey(key)) {
-                diffItem.put("type", "removed");
-                diffItem.put("value", value1);
-            } else if (!file1Data.containsKey(key) && file2Data.containsKey(key)) {
-                diffItem.put("type", "added");
-                diffItem.put("value", value2);
-            } else if (value1 != null && value2 != null && !value1.equals(value2)) {
-                diffItem.put("type", "changed");
-                diffItem.put("oldValue", value1);
-                diffItem.put("newValue", value2);
-            } else if ((value1 == null && value2 != null) || (value1 != null && value2 == null)) {
-                diffItem.put("type", "changed");
-                diffItem.put("oldValue", value1);
-                diffItem.put("newValue", value2);
-            } else {
-                diffItem.put("type", "unchanged");
-                diffItem.put("value", value1);
-            }
+            Map<String, Object> diffItem = createDiffItem(key, value1, value2, file1Data, file2Data);
             diff.add(diffItem);
         }
         return diff;
+    }
+
+    private static Map<String, Object> createDiffItem(String key, Object value1, Object value2,
+                                                      Map<String, Object> file1Data, Map<String, Object> file2Data) {
+        Map<String, Object> diffItem = new LinkedHashMap<>();
+        diffItem.put("key", key);
+        if (file1Data.containsKey(key) && !file2Data.containsKey(key)) {
+            diffItem.put("type", "removed");
+            diffItem.put("value", value1);
+        } else if (!file1Data.containsKey(key) && file2Data.containsKey(key)) {
+            diffItem.put("type", "added");
+            diffItem.put("value", value2);
+        } else if (valuesAreDifferent(value1, value2)) {
+            diffItem.put("type", "changed");
+            diffItem.put("oldValue", value1);
+            diffItem.put("newValue", value2);
+        } else {
+            diffItem.put("type", "unchanged");
+            diffItem.put("value", value1);
+        }
+        return diffItem;
+    }
+
+    private static boolean valuesAreDifferent(Object value1, Object value2) {
+        if (value1 == null && value2 == null) {
+            return false;
+        }
+        if (value1 == null || value2 == null) {
+            return true;
+        }
+        return !value1.equals(value2);
     }
 }
