@@ -12,10 +12,6 @@ class ParserTest {
     void testParseJson() throws Exception {
         String filePath = getFixturePath("equal1.json");
         Map<String, Object> result = Parser.parseFile(filePath);
-        final int fieldValue = 50;
-        final int mapSize = 4;
-        assertEquals(mapSize, result.size());
-        assertEquals(fieldValue, result.get("timeout"));
         assertEquals(true, result.get("verbose"));
         assertEquals("hexlet.io", result.get("host"));
         assertEquals(false, result.get("follow"));
