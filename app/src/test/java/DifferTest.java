@@ -185,6 +185,87 @@ class DifferTest {
     }
 
     @Test
+    void testGenerateWithNestedStructureJson() throws Exception {
+        String file1Path = TestUtils.getFixturePath("nested1.json");
+        String file2Path = TestUtils.getFixturePath("nested2.json");
+        String expected = """
+                [ {
+                  "key" : "chars1",
+                  "type" : "unchanged",
+                  "value" : [ "a", "b", "c" ]
+                }, {
+                  "key" : "chars2",
+                  "type" : "changed",
+                  "oldValue" : [ "d", "e", "f" ],
+                  "newValue" : false
+                }, {
+                  "key" : "checked",
+                  "type" : "changed",
+                  "oldValue" : false,
+                  "newValue" : true
+                }, {
+                  "key" : "default",
+                  "type" : "changed",
+                  "oldValue" : null,
+                  "newValue" : [ "value1", "value2" ]
+                }, {
+                  "key" : "id",
+                  "type" : "changed",
+                  "oldValue" : 45,
+                  "newValue" : null
+                }, {
+                  "key" : "key1",
+                  "type" : "removed",
+                  "value" : "value1"
+                }, {
+                  "key" : "key2",
+                  "type" : "added",
+                  "value" : "value2"
+                }, {
+                  "key" : "numbers1",
+                  "type" : "unchanged",
+                  "value" : [ 1, 2, 3, 4 ]
+                }, {
+                  "key" : "numbers2",
+                  "type" : "changed",
+                  "oldValue" : [ 2, 3, 4, 5 ],
+                  "newValue" : [ 22, 33, 44, 55 ]
+                }, {
+                  "key" : "numbers3",
+                  "type" : "removed",
+                  "value" : [ 3, 4, 5 ]
+                }, {
+                  "key" : "numbers4",
+                  "type" : "added",
+                  "value" : [ 4, 5, 6 ]
+                }, {
+                  "key" : "obj1",
+                  "type" : "added",
+                  "value" : {
+                    "nestedKey" : "value",
+                    "isNested" : true
+                  }
+                }, {
+                  "key" : "setting1",
+                  "type" : "changed",
+                  "oldValue" : "Some value",
+                  "newValue" : "Another value"
+                }, {
+                  "key" : "setting2",
+                  "type" : "changed",
+                  "oldValue" : 200,
+                  "newValue" : 300
+                }, {
+                  "key" : "setting3",
+                  "type" : "changed",
+                  "oldValue" : true,
+                  "newValue" : "none"
+                } ]""";
+        String actual = Differ.generate(file1Path, file2Path, "json");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void testGenerateWithIncorrectFile() {
         assertThrows(Exception.class, () -> Differ.generate("incorrect", "incorrect"));
     }
