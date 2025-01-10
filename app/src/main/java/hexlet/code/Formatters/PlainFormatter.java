@@ -33,7 +33,7 @@ public class PlainFormatter implements Formatter {
                     break;
             }
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 
     private String formatValue(Object value) {
