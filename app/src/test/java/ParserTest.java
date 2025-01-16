@@ -12,6 +12,7 @@ class ParserTest {
     void testParseJson() throws Exception {
         String filePath = getFixturePath("actual/equal1.json");
         Map<String, Object> result = Parser.parseFile(filePath);
+
         assertEquals(true, result.get("verbose"));
         assertEquals("hexlet.io", result.get("host"));
         assertEquals(false, result.get("follow"));
@@ -21,6 +22,7 @@ class ParserTest {
     void testParseYaml() throws Exception {
         String filePath = getFixturePath("actual/equal1.yaml");
         Map<String, Object> result = Parser.parseFile(filePath);
+
         assertEquals(true, result.get("verbose"));
         assertEquals("hexlet.io", result.get("host"));
         assertEquals(false, result.get("follow"));
