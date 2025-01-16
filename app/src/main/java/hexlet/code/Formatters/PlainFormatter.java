@@ -8,36 +8,22 @@ import java.util.Objects;
 
 
 public final class PlainFormatter implements Formatter {
-
     @Override
     public String format(List<Map<String, Object>> diff) {
         StringBuilder sb = new StringBuilder();
         for (Map<String, Object> diffItem : diff) {
             String key = (String) diffItem.get("key");
             String type = (String) diffItem.get("type");
-            Object value;
-            Object newValue;
-            Object oldValue;
-            switch (DiffType.fromString(type)) {
+            DiffType diffType = DiffType.fromString(type);
+            switch (diffType) {
                 case ADDED:
-                    newValue = diffItem.get("value");
-                    sb.append("Property '")
-                            .append(key)
-                            .append("' was added with value: ")
-                            .append(formatValue(newValue))
-                            .append("\n");
+                    processAdded(sb, key, diffItem);
                     break;
                 case REMOVED:
-                    sb.append("Property '").append(key).append("' was removed\n");
+                    processRemoved(sb, key);
                     break;
                 case CHANGED:
-                    oldValue = diffItem.get("oldValue");
-                    newValue = diffItem.get("newValue");
-                    sb.append("Property '")
-                            .append(key)
-                            .append("' was updated. From ")
-                            .append(formatValue(oldValue)).append(" to ")
-                            .append(formatValue(newValue)).append("\n");
+                    processChanged(sb, key, diffItem);
                     break;
                 default:
                     break;
@@ -45,6 +31,34 @@ public final class PlainFormatter implements Formatter {
         }
         return sb.toString().trim();
     }
+
+    private void processAdded(StringBuilder sb, String key, Map<String, Object> diffItem) {
+        Object newValue = diffItem.get("value");
+        sb.append("Property '")
+                .append(key)
+                .append("' was added with value: ")
+                .append(formatValue(newValue))
+                .append("\n");
+    }
+
+    private void processRemoved(StringBuilder sb, String key) {
+        sb.append("Property '")
+                .append(key)
+                .append("' was removed\n");
+    }
+
+    private void processChanged(StringBuilder sb, String key, Map<String, Object> diffItem) {
+        Object oldValue = diffItem.get("oldValue");
+        Object newValue = diffItem.get("newValue");
+        sb.append("Property '")
+                .append(key)
+                .append("' was updated. From ")
+                .append(formatValue(oldValue))
+                .append(" to ")
+                .append(formatValue(newValue))
+                .append("\n");
+    }
+
 
     private String formatValue(Object value) {
         if (value == null) {

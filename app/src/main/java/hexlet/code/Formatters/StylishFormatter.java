@@ -6,38 +6,26 @@ import java.util.Objects;
 import hexlet.code.DiffType;
 
 public final class StylishFormatter implements Formatter {
-
     @Override
     public String format(List<Map<String, Object>> diff) {
         StringBuilder sb = new StringBuilder("{\n");
         for (Map<String, Object> diffItem : diff) {
             String key = (String) diffItem.get("key");
             String type = (String) diffItem.get("type");
-            Object value;
-            Object newValue;
-            Object oldValue;
-            switch (DiffType.fromString(type)) {
+
+            DiffType diffType = DiffType.fromString(type);
+            switch (diffType) {
                 case ADDED:
-                    value = diffItem.get("value");
-                    if (value == null) {
-                        sb.append("  + ").append(key).append(": ").append(Objects.toString(null)).append("\n");
-                    } else {
-                        sb.append("  + ").append(key).append(": ").append(Objects.toString(value)).append("\n");
-                    }
+                    processAdded(sb, key, diffItem);
                     break;
                 case REMOVED:
-                    value = diffItem.get("value");
-                    sb.append("  - ").append(key).append(": ").append(Objects.toString(value)).append("\n");
+                    processRemoved(sb, key, diffItem);
                     break;
                 case CHANGED:
-                    oldValue = diffItem.get("oldValue");
-                    newValue = diffItem.get("newValue");
-                    sb.append("  - ").append(key).append(": ").append(Objects.toString(oldValue)).append("\n");
-                    sb.append("  + ").append(key).append(": ").append(Objects.toString(newValue)).append("\n");
+                    processChanged(sb, key, diffItem);
                     break;
                 case UNCHANGED:
-                    value = diffItem.get("value");
-                    sb.append("    ").append(key).append(": ").append(Objects.toString(value)).append("\n");
+                    processUnchanged(sb, key, diffItem);
                     break;
                 default:
                     break;
@@ -46,4 +34,37 @@ public final class StylishFormatter implements Formatter {
         sb.append("}");
         return sb.toString();
     }
+
+    private void processAdded(StringBuilder sb, String key, Map<String, Object> diffItem) {
+        Object value = diffItem.get("value");
+        sb.append("  + ").append(key).append(": ")
+                .append(Objects.toString(value, "null"))
+                .append("\n");
+    }
+
+    private void processRemoved(StringBuilder sb, String key, Map<String, Object> diffItem) {
+        Object value = diffItem.get("value");
+        sb.append("  - ").append(key).append(": ")
+                .append(Objects.toString(value, "null"))
+                .append("\n");
+    }
+
+    private void processChanged(StringBuilder sb, String key, Map<String, Object> diffItem) {
+        Object oldValue = diffItem.get("oldValue");
+        Object newValue = diffItem.get("newValue");
+        sb.append("  - ").append(key).append(": ")
+                .append(Objects.toString(oldValue, "null"))
+                .append("\n");
+        sb.append("  + ").append(key).append(": ")
+                .append(Objects.toString(newValue, "null"))
+                .append("\n");
+    }
+
+    private void processUnchanged(StringBuilder sb, String key, Map<String, Object> diffItem) {
+        Object value = diffItem.get("value");
+        sb.append("    ").append(key).append(": ")
+                .append(Objects.toString(value, "null"))
+                .append("\n");
+    }
+
 }
