@@ -9,7 +9,6 @@ import picocli.CommandLine.Parameters;
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "1.0",
         description = "Compares two configuration files and shows a difference.")
 public final class App implements Runnable {
-
     @Parameters(index = "0", description = "path to first file")
     private String filepath1;
 

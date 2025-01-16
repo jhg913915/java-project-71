@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 import hexlet.code.Parser;
 
-import static hexlet.code.Utils.TestUtils.getFixturePath;
+import static utils.TestUtils.getFixturePath;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -10,7 +10,7 @@ class ParserTest {
 
     @Test
     void testParseJson() throws Exception {
-        String filePath = getFixturePath("equal1.json");
+        String filePath = getFixturePath("actual/equal1.json");
         Map<String, Object> result = Parser.parseFile(filePath);
         assertEquals(true, result.get("verbose"));
         assertEquals("hexlet.io", result.get("host"));
@@ -19,7 +19,7 @@ class ParserTest {
 
     @Test
     void testParseYaml() throws Exception {
-        String filePath = getFixturePath("equal1.yaml");
+        String filePath = getFixturePath("actual/equal1.yaml");
         Map<String, Object> result = Parser.parseFile(filePath);
         assertEquals(true, result.get("verbose"));
         assertEquals("hexlet.io", result.get("host"));

@@ -1,10 +1,10 @@
 package hexlet.code;
 
+import hexlet.code.Formatters.FormatType;
 import hexlet.code.Formatters.Formatter;
-import hexlet.code.Formatters.JsonFormatter;
 import hexlet.code.Formatters.PlainFormatter;
 import hexlet.code.Formatters.StylishFormatter;
-
+import hexlet.code.Formatters.JsonFormatter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import java.util.LinkedHashMap;
 
 public class Differ {
+    private static final FormatType DEFAULT_FORMAT = FormatType.STYLISH;
 
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
         Map<String, Object> file1Data = Parser.parseFile(filePath1);
@@ -22,15 +23,14 @@ public class Differ {
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
-        return generate(filePath1, filePath2, "stylish");
+        return generate(filePath1, filePath2, DEFAULT_FORMAT.getFormatName());
     }
 
     private static String format(List<Map<String, Object>> diff, String formatName) {
-        Formatter formatter = switch (formatName) {
-            case "stylish" -> new StylishFormatter();
-            case "plain" -> new PlainFormatter();
-            case "json" -> new JsonFormatter();
-            default -> new StylishFormatter();
+        Formatter formatter = switch (FormatType.fromString(formatName)) {
+            case STYLISH -> new StylishFormatter();
+            case PLAIN -> new PlainFormatter();
+            case JSON -> new JsonFormatter();
         };
         return formatter.format(diff);
     }
@@ -54,17 +54,17 @@ public class Differ {
         Map<String, Object> diffItem = new LinkedHashMap<>();
         diffItem.put("key", key);
         if (file1Data.containsKey(key) && !file2Data.containsKey(key)) {
-            diffItem.put("type", "removed");
+            diffItem.put("type", DiffType.REMOVED.getTypeName());
             diffItem.put("value", value1);
         } else if (!file1Data.containsKey(key) && file2Data.containsKey(key)) {
-            diffItem.put("type", "added");
+            diffItem.put("type", DiffType.ADDED.getTypeName());
             diffItem.put("value", value2);
         } else if (valuesAreDifferent(value1, value2)) {
-            diffItem.put("type", "changed");
+            diffItem.put("type", DiffType.CHANGED.getTypeName());
             diffItem.put("oldValue", value1);
             diffItem.put("newValue", value2);
         } else {
-            diffItem.put("type", "unchanged");
+            diffItem.put("type", DiffType.UNCHANGED.getTypeName());
             diffItem.put("value", value1);
         }
         return diffItem;
