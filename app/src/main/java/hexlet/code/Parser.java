@@ -9,12 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Objects;
 
 public class Parser {
     public static Map<String, Object> parseFile(String filePath) throws Exception {
         Path path = Paths.get(filePath).toAbsolutePath();
         String content = readFile(path.toString());
-        return parse(content, getFormat(filePath));
+        return parse(content, Objects.requireNonNull(getFormat(filePath)));
     }
 
     private static String readFile(String path) throws Exception {
@@ -27,10 +28,15 @@ public class Parser {
 
     private static Map<String, Object> parse(String content, FileType fileType) throws Exception {
         ObjectMapper mapper;
-        if (fileType == FileType.JSON) {
-            mapper = new ObjectMapper();
-        } else {
-            mapper = new YAMLMapper();
+        switch (fileType) {
+            case JSON:
+                mapper = new ObjectMapper();
+                break;
+            case YAML, YML:
+                mapper = new YAMLMapper();
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported file type: " + fileType);
         }
         try {
             return mapper.readValue(content, new TypeReference<>() { });
@@ -38,6 +44,7 @@ public class Parser {
             throw new Exception("Incorrect format of file");
         }
     }
+
 
     private static FileType getFormat(String path) {
         String trimmedPath = path.trim();
